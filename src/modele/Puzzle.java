@@ -30,6 +30,19 @@ public class Puzzle {
 		return this.getCases().get(x+(y*(nbColonnes)));
 	}
 	
+	public void afficher(){
+		Case c;
+		for(int i=0; i<nbLignes; i++){
+			for(int j=0; j<nbColonnes; j++){
+				c = this.getCases().get(j+(i*nbColonnes));
+				System.out.print(c.getNumero() + ":");
+				if(c.getAgent() == null) System.out.print("X  ");
+				else System.out.print("AGENT  ");
+			}
+			System.out.println();
+		}
+	}
+	
 	//***************************************************
 	//GETTERS AND SETTERS
 	//***************************************************

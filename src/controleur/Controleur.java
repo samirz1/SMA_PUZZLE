@@ -11,7 +11,7 @@ import vue.PuzzleView;
 public class Controleur {
 
 	public static void main(String[] args){
-		controleur = new Controleur(5, 5, 4);
+		new Controleur(5, 5, 4);
 		
 	}
 	
@@ -20,7 +20,6 @@ public class Controleur {
 	//***************************************************
 	private HashMap<Integer, Agent> agents;
 	private PuzzleView puzzleView;
-	private static Controleur controleur;
 
 	//***************************************************
 	//METHODES
@@ -36,7 +35,7 @@ public class Controleur {
 			do{
 				xDepart = r.nextInt(nbColonnes-1);
 				yDepart = r.nextInt(nbLignes-1);
-			}while(this.caseDepartPrise(xDepart, yDepart));
+			}while(this.caseCourantePrise(xDepart, yDepart));
 			do{
 				xArrive = r.nextInt(nbColonnes-1);
 				yArrive = r.nextInt(nbLignes-1);
@@ -45,9 +44,11 @@ public class Controleur {
 		}
 		//CREATION DU PUZZLEVIEW
 		this.setPuzzleView(new PuzzleView(puzzle));
+		puzzle.afficher();
+		
 	}
 	
-	public boolean caseDepartPrise(int x, int y){
+	public boolean caseCourantePrise(int x, int y){
 		boolean prise = false;
 		Iterator<Integer> iter = this.getAgents().keySet().iterator();
 		while(iter.hasNext()){

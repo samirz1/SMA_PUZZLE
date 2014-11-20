@@ -89,7 +89,12 @@ public class Agent extends Thread {
 	}
 	
 	public void MAJcase(){
+		//On enléve l'agent de la case
+		if(this.getCasee() != null)
+			this.getCasee().setAgent(null);
+		//On modifie la case de l'agent et l'agent dans la case
 		this.setCasee(this.getPuzzle().getCaseXY(this.getxCourant(), this.getyCourant()));
+		this.getCasee().setAgent(this);
 		System.out.println("POUR (" + this.getxCourant() + "," + this.getyCourant() + ")  ON OBTIENT " + this.getCasee().getNumero());
 	}
 
