@@ -1,20 +1,10 @@
 package modele;
 
-public class StrategieCheminDirect {
+public class StrategieCheminDirect implements Strategie{
 
-	//***************************************************
-	//ATTRIBUTS
-	//***************************************************
-	
+	@Override
+	public void executionStrategie() {
+		
+	}
 
-	//***************************************************
-	//METHODES
-	//***************************************************
-	
-	
-	//***************************************************
-	//GETTERS AND SETTERS
-	//***************************************************
-	
-	
 }

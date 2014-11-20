@@ -1,20 +1,10 @@
 package modele;
 
-public class StrategieMeilleurChemin {
+public class StrategieMeilleurChemin implements Strategie{
 
-	//***************************************************
-	//ATTRIBUTS
-	//***************************************************
-	
-
-	//***************************************************
-	//METHODES
-	//***************************************************
-	
-	
-	//***************************************************
-	//GETTERS AND SETTERS
-	//***************************************************
-	
+	@Override
+	public void executionStrategie() {
+				
+	}
 	
 }

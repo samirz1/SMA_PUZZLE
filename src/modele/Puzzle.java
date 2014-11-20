@@ -14,11 +14,20 @@ public class Puzzle {
 	//***************************************************
 	//METHODES
 	//***************************************************
-	public Puzzle(int nbLignes, int nbColonnes) {
+	public Puzzle(int nbColonnes, int nbLignes) {
 		super();
-		this.nbLignes = nbLignes;
 		this.nbColonnes = nbColonnes;
+		this.nbLignes = nbLignes;		
+		//CREATION DES CASES
 		this.setCases(new HashMap<Integer, Case>());
+		for(int i=0; i<nbLignes; i++){
+			for(int j=0; j<nbColonnes; j++)
+				this.getCases().put(j+(i*(nbLignes)), new Case(j+(i*(nbLignes)), i, j));
+		}
+	}
+	
+	public Case getCaseXY(int x, int y){
+		return this.getCases().get(x+(y*(nbColonnes)));
 	}
 	
 	//***************************************************

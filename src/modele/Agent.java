@@ -12,29 +12,32 @@ public class Agent extends Thread {
 	// ***************************************************
 	// ATTRIBUTS
 	// ***************************************************
-	private int xDepart;
-	private int yDepart;
 	private int xArrive;
 	private int yArrive;
+	private int xCourant;
+	private int yCourant;
 	private ImageIcon image;
 	private int numeroPort;
 	private ServerSocket socketServer;
 	private Socket socket;
 	private Case casee;
+	private Puzzle puzzle;
 	private HashMap<Integer, Agent> agents;
 
 	// ***************************************************
 	// METHODES
 	// ***************************************************
-	public Agent(int xDepart, int yDepart, int xArrive, int yArrive,
-			int numeroPort, HashMap<Integer, Agent> agents) {
+	public Agent(int xCourant, int yCourant, int xArrive, int yArrive,
+			int numeroPort, HashMap<Integer, Agent> agents, Puzzle puzzle) {
 		super();
-		this.xDepart = xDepart;
-		this.yDepart = yDepart;
+		this.setxCourant(xCourant);
+		this.setyCourant(yCourant);
 		this.xArrive = xArrive;
 		this.yArrive = yArrive;
 		this.numeroPort = numeroPort;
+		this.setPuzzle(puzzle);
 		this.setAgents(agents);
+		this.MAJcase();
 	}
 
 	@Override
@@ -81,29 +84,18 @@ public class Agent extends Thread {
 	}
 
 	public boolean estArrive() {
-		return ((this.getxDepart() == this.getxArrive()) && (this.getyDepart() == this
+		return ((this.getxCourant() == this.getxArrive()) && (this.getyCourant() == this
 				.getyArrive()));
+	}
+	
+	public void MAJcase(){
+		this.setCasee(this.getPuzzle().getCaseXY(this.getxCourant(), this.getyCourant()));
+		System.out.println("POUR (" + this.getxCourant() + "," + this.getyCourant() + ")  ON OBTIENT " + this.getCasee().getNumero());
 	}
 
 	// ***************************************************
 	// GETTERS AND SETTERS
 	// ***************************************************
-	public int getxDepart() {
-		return xDepart;
-	}
-
-	public void setxDepart(int xDepart) {
-		this.xDepart = xDepart;
-	}
-
-	public int getyDepart() {
-		return yDepart;
-	}
-
-	public void setyDepart(int yDepart) {
-		this.yDepart = yDepart;
-	}
-
 	public int getxArrive() {
 		return xArrive;
 	}
@@ -166,6 +158,30 @@ public class Agent extends Thread {
 
 	public void setAgents(HashMap<Integer, Agent> agents) {
 		this.agents = agents;
+	}
+
+	public Puzzle getPuzzle() {
+		return puzzle;
+	}
+
+	public void setPuzzle(Puzzle puzzle) {
+		this.puzzle = puzzle;
+	}
+
+	public int getxCourant() {
+		return xCourant;
+	}
+
+	public void setxCourant(int xCourant) {
+		this.xCourant = xCourant;
+	}
+
+	public int getyCourant() {
+		return yCourant;
+	}
+
+	public void setyCourant(int yCourant) {
+		this.yCourant = yCourant;
 	}
 
 }

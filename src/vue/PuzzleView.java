@@ -2,6 +2,8 @@ package vue;
 
 import javax.swing.JFrame;
 
+import modele.Puzzle;
+
 public class PuzzleView extends JFrame{
 
 	private static final long serialVersionUID = 1L;
@@ -9,22 +11,28 @@ public class PuzzleView extends JFrame{
 	//***************************************************
 	//ATTRIBUTS
 	//***************************************************
-	
+	private Puzzle puzzle;
 
 	//***************************************************
 	//METHODES
 	//***************************************************
-	public PuzzleView(int nbLignes, int nbColonnes){
+	public PuzzleView(Puzzle puzzle){
 		this.setTitle("PUZZLE - ESPENEL & HIMMICH");
 	    this.setSize(400, 500);
 	    this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);             
 	    this.setVisible(true);
 	}
-	
+
 	//***************************************************
 	//GETTERS AND SETTERS
 	//***************************************************
-	
+	public Puzzle getPuzzle() {
+		return puzzle;
+	}
+
+	public void setPuzzle(Puzzle puzzle) {
+		this.puzzle = puzzle;
+	}	
 	
 }

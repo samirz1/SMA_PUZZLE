@@ -22,6 +22,17 @@ public class Case extends Observable {
 		this.y = y;
 	}
 
+	public boolean estLibre(){
+		return this.getAgent() == null;
+	}
+	
+	@Override
+	public void notifyObservers() {
+		super.notifyObservers();
+		
+		
+	}
+	
 	// ***************************************************
 	// GETTERS AND SETTERS
 	// ***************************************************
