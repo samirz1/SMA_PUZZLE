@@ -19,6 +19,10 @@ public class Message {
 		this.contenu = contenu;
 	}
 	
+	public String toString(){
+		return new String(emetteur.getName() + " " + recepteur.getName() + " " + performatif.toString() + " " + contenu);
+	}
+	
 	//GETTERS SETTERS
 	public Agent getEmetteur() {
 		return emetteur;

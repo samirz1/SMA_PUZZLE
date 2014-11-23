@@ -1,11 +1,17 @@
 package modele;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.ImageIcon;
+
+import modele.messages.Message;
+import modele.messages.Performatif;
 
 public class Agent extends Thread {
 
@@ -23,6 +29,9 @@ public class Agent extends Thread {
 	private Case casee;
 	private Puzzle puzzle;
 	private HashMap<Integer, Agent> agents;
+	
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
 
 	// ***************************************************
 	// METHODES
@@ -43,19 +52,49 @@ public class Agent extends Thread {
 	@Override
 	public void run() {
 		while (!this.puzzleFini()) {
-			this.receptionMessage();
-			this.traitementMessage();
+			Message msg = this.receptionMessage();
+			this.traitementMessage(msg);
 			this.perception();
 			this.raisonnement();
 			this.action();
 		}
 	}
 
-	public void receptionMessage() {
-
+	public Message receptionMessage() {
+		try {
+			socketServer = new ServerSocket(numeroPort);
+			socket = socketServer.accept();
+			//Récupération des flux
+			out = new ObjectOutputStream(socket.getOutputStream());
+			out.flush();
+			in = new ObjectInputStream(socket.getInputStream());
+			
+			//On reconstruit le message reçu
+			return generateMessage((String) in.readObject());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Message generateMessage(String msg){
+		
+		//TODO faire une analyse du message  pour le récupérer sous forme d'objet
+		System.out.println(msg);
+		String emetteur = "tes";
+		String performatif = "tes";
+		String contenu = "tes";
+		
+		
+		
+		return new Message(agents.get(emetteur), this, Performatif.valueOf(performatif), contenu);
 	}
 
-	public void traitementMessage() {
+	public void traitementMessage(Message msg) {
 
 	}
 	
