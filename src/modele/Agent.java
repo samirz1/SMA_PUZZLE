@@ -58,6 +58,10 @@ public class Agent extends Thread {
 	public void traitementMessage() {
 
 	}
+	
+	public void envoieMessage(Message msg){
+		
+	}
 
 	public void raisonnement() {
 

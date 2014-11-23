@@ -17,7 +17,7 @@ public class Controleur {
 	
 	//***************************************************
 	//ATTRIBUTS
-	//***************************************************
+	//*************************************************** 
 	private HashMap<Integer, Agent> agents;
 	private PuzzleView puzzleView;
 
