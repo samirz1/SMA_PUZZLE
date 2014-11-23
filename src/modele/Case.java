@@ -28,9 +28,7 @@ public class Case extends Observable {
 	
 	@Override
 	public void notifyObservers() {
-		super.notifyObservers();
-		
-		
+		super.notifyObservers();		
 	}
 	
 	// ***************************************************
@@ -66,6 +64,7 @@ public class Case extends Observable {
 
 	public void setAgent(Agent agent) {
 		this.agent = agent;
+		this.notifyObservers();
 	}
 
 }
