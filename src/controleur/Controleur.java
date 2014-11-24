@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import modele.Agent;
+import modele.Case;
 import modele.Puzzle;
 import vue.PuzzleView;
 
@@ -45,6 +46,13 @@ public class Controleur {
 		//CREATION DU PUZZLEVIEW
 		this.setPuzzleView(new PuzzleView(puzzle));
 		puzzle.afficher();
+		
+		//OBSERVER OBSERVABLE
+		Iterator<Integer> iter = puzzle.getCases().keySet().iterator();
+		while(iter.hasNext()){
+			Case c = puzzle.getCases().get(iter.next());
+			c.addObserver(puzzleView);
+		}
 		
 	}
 	
