@@ -16,7 +16,8 @@ public class CaseView extends JPanel{
 	//ATTRIBUTS
 	//***************************************************
 	private Case casee;
-
+	private JLabel label;
+	
 	//***************************************************
 	//METHODES
 	//***************************************************
@@ -26,12 +27,24 @@ public class CaseView extends JPanel{
 		this.MAJ();
 	}
 	
-	public void MAJ(){
+	public synchronized void MAJ(){
 		if(this.getCasee().getAgent()!=null){
 			this.setBackground(Color.GRAY);
-			this.add(new JLabel(Integer.toString(this.getCasee().getAgent().getNumeroPort())));
-		}else 
+			//TODO A OPTIMISER
+			if(label != null) this.remove(label);
+			if(this.getCasee().getAgent() != null)
+				label = new JLabel(Integer.toString(this.getCasee().getAgent().getNumeroPort()));
+			
+			//TODO IMAGE
+			//this.getCasee().getAgent().getImage().getImage().getScaledInstance(5, 5, java.awt.Image.SCALE_SMOOTH);
+			//label.setIcon(this.getCasee().getAgent().getImage());
+			
+			this.add(label);
+			
+		}else {
 			this.setBackground(Color.WHITE);
+			if(label != null) this.remove(label);
+		}
 	}
 	
 	//***************************************************

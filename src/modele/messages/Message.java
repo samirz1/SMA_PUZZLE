@@ -5,10 +5,11 @@ import modele.Agent;
 public class Message {
 
 	
-	Agent emetteur;
-	Agent recepteur;
-	Performatif performatif;
-	String contenu;
+	private Agent emetteur;
+	private Agent recepteur;
+	private Performatif performatif;
+	private String contenu;
+	private static String separateur = " / ";
 	
 	public Message(Agent emetteur, Agent recepteur, Performatif performatif,
 			String contenu) {
@@ -20,7 +21,7 @@ public class Message {
 	}
 	
 	public String toString(){
-		return new String(emetteur.getName() + " " + recepteur.getName() + " " + performatif.toString() + " " + contenu);
+		return new String(emetteur.getName() + "/" + recepteur.getName() + "/" + performatif.toString() + " " + contenu);
 	}
 	
 	//GETTERS SETTERS
@@ -47,6 +48,14 @@ public class Message {
 	}
 	public void setContenu(String contenu) {
 		this.contenu = contenu;
+	}
+
+	public static String getSeparateur() {
+		return separateur;
+	}
+
+	public static void setSeparateur(String separateur) {
+		Message.separateur = separateur;
 	}
 	
 }

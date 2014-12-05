@@ -22,6 +22,7 @@ public class PuzzleView extends JFrame implements Observer{
 	// ***************************************************
 	private Puzzle puzzle;
 	private HashMap<Integer, CaseView> caseViews;
+	private JPanel panel;
 
 	// ***************************************************
 	// METHODES
@@ -36,13 +37,14 @@ public class PuzzleView extends JFrame implements Observer{
 		this.setCaseViews(new HashMap<Integer, CaseView>());
 		this.liaisonCaseCaseView();
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(Color.ORANGE);
 		this.setContentPane(panel);
 		panel.setLayout(new GridLayout(puzzle.getNbLignes(), puzzle.getNbLignes(), 5, 5));
-		for(int i=0; i<this.puzzle.getCases().size(); i++)
+		for(int i=0; i<this.puzzle.getCases().size(); i++){
 			panel.add(this.getCaseViews().get(i));
-
+		}	
+		
 		this.setVisible(true);
 	}
 	
@@ -62,7 +64,9 @@ public class PuzzleView extends JFrame implements Observer{
 			caseView = this.getCaseViews().get(iter.next());
 			caseView.MAJ();
 		}
+		this.paintComponents(this.getGraphics());
 	}
+
 
 	@Override
 	public void update(Observable arg0, Object arg1) {

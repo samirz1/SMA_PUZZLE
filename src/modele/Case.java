@@ -64,6 +64,7 @@ public class Case extends Observable {
 
 	public void setAgent(Agent agent) {
 		this.agent = agent;
+		this.setChanged();
 		this.notifyObservers();
 	}
 

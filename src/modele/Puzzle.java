@@ -20,14 +20,45 @@ public class Puzzle {
 		this.nbLignes = nbLignes;		
 		//CREATION DES CASES
 		this.setCases(new HashMap<Integer, Case>());
-		for(int i=0; i<nbLignes; i++){
-			for(int j=0; j<nbColonnes; j++)
-				this.getCases().put(j+(i*(nbLignes)), new Case(j+(i*(nbLignes)), i, j));
+		for(int y=0; y<nbLignes; y++){
+			for(int x=0; x<nbColonnes; x++)
+				this.getCases().put(x+(y*(nbColonnes)), new Case(x+(y*(nbColonnes)), y, x));
 		}
 	}
 	
 	public Case getCaseXY(int x, int y){
-		return this.getCases().get(x+(y*(nbColonnes)));
+		if(x >= 0 && y >=0 && x < nbColonnes && y < nbLignes)
+			return this.getCases().get(x+(y*(nbColonnes)));
+		else 
+			return null;
+	}
+	
+	public int getNumeroCase(int x, int y){
+		return x+(y*(nbColonnes));
+	}
+	
+	//TODO marche ?
+	public Integer[] getCaseFromNumero(int numCase){
+		Integer[] retour = new Integer[2];
+		retour[1] = (int) numCase / nbColonnes;
+		retour[0] = numCase % nbColonnes;
+		return retour;
+	}
+	
+	//TODO vérifier que marche parfaitement
+	//Retourne false si la case est occupée ou si la case n'existe pas
+	public boolean isCaseEmpty(int x, int y){
+		if(getCaseXY(x, y) != null){
+			if(getCaseXY(x, y).getAgent() == null){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
 	}
 	
 	public void afficher(){

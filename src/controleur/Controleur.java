@@ -7,6 +7,8 @@ import java.util.Random;
 import modele.Agent;
 import modele.Case;
 import modele.Puzzle;
+import modele.StrategieCheminDirect;
+import modele.StrategieMeilleurChemin;
 import vue.PuzzleView;
 
 public class Controleur {
@@ -41,7 +43,7 @@ public class Controleur {
 				xArrive = r.nextInt(nbColonnes-1);
 				yArrive = r.nextInt(nbLignes-1);
 			}while(this.caseArrivePrise(xArrive, yArrive));
-			this.getAgents().put(i+1111, new Agent(xDepart, yDepart, xArrive, yArrive, i+1111, this.getAgents(), puzzle));
+			this.getAgents().put(i+1111, new Agent(new StrategieMeilleurChemin(),xDepart, yDepart, xArrive, yArrive, i+1111, this.getAgents(), puzzle));
 		}
 		//CREATION DU PUZZLEVIEW
 		this.setPuzzleView(new PuzzleView(puzzle));
@@ -53,6 +55,50 @@ public class Controleur {
 			Case c = puzzle.getCases().get(iter.next());
 			c.addObserver(puzzleView);
 		}
+		
+		//TODO 
+		// ON test un agent actif
+		/*
+		agents.get(1112).setPositionCourante(0, 1);
+		agents.get(1113).setPositionCourante(3, 1);
+		agents.get(1114).setPositionCourante(0, 2);
+		*/
+		
+		agents.get(1113).setPositionCourante(1, 0);
+		agents.get(1114).setPositionCourante(2, 1);
+		
+		//TODO
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		agents.get(1111).setActivated(true);
+		agents.get(1112).setActivated(true);
+		
+		
+		if(puzzle.isCaseEmpty(1, 2)){
+			agents.get(1111).setPositionCourante(1, 2);
+			agents.get(1111).setxArrive(3);
+			agents.get(1111).setyArrive(2);
+		}
+		else{
+			System.out.println("TEST RATE");
+		}
+		
+		if(puzzle.isCaseEmpty(2, 3)){
+			agents.get(1112).setPositionCourante(2, 3);
+			agents.get(1112).setxArrive(3);
+			agents.get(1112).setyArrive(0);
+		}
+		else{
+			System.out.println("TEST RATE");
+		}
+		
+		agents.get(1111).start();
+		agents.get(1112).start();
 		
 	}
 	

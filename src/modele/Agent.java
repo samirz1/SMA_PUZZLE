@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.activation.ActivateFailedException;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -30,15 +31,21 @@ public class Agent extends Thread {
 	private Puzzle puzzle;
 	private HashMap<Integer, Agent> agents;
 	
+	private boolean activated = false;
+
+	private Strategie strategie;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 
 	// ***************************************************
 	// METHODES
 	// ***************************************************
-	public Agent(int xCourant, int yCourant, int xArrive, int yArrive,
-			int numeroPort, HashMap<Integer, Agent> agents, Puzzle puzzle) {
+	public Agent(Strategie strategie, int xCourant, int yCourant, int xArrive,
+			int yArrive, int numeroPort, HashMap<Integer, Agent> agents,
+			Puzzle puzzle) {
 		super();
+		this.strategie = strategie;
+		this.strategie.setAgent(this);
 		this.setxCourant(xCourant);
 		this.setyCourant(yCourant);
 		this.xArrive = xArrive;
@@ -47,71 +54,17 @@ public class Agent extends Thread {
 		this.setPuzzle(puzzle);
 		this.setAgents(agents);
 		this.MAJcase();
+		this.setImage(new ImageIcon("images//image"+Integer.toString(this.getNumeroPort()-1110)+".jpg"));
 	}
 
 	@Override
 	public void run() {
 		while (!this.puzzleFini()) {
-			Message msg = this.receptionMessage();
-			this.traitementMessage(msg);
-			this.perception();
-			this.raisonnement();
-			this.action();
-		}
-	}
-
-	public Message receptionMessage() {
-		try {
-			socketServer = new ServerSocket(numeroPort);
-			socket = socketServer.accept();
-			//Récupération des flux
-			out = new ObjectOutputStream(socket.getOutputStream());
-			out.flush();
-			in = new ObjectInputStream(socket.getInputStream());
 			
-			//On reconstruit le message reçu
-			return generateMessage((String) in.readObject());
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			return null;
+			if(this.activated){
+				strategie.executionStrategie();
+			}
 		}
-	}
-	
-	public Message generateMessage(String msg){
-		
-		//TODO faire une analyse du message  pour le récupérer sous forme d'objet
-		System.out.println(msg);
-		String emetteur = "tes";
-		String performatif = "tes";
-		String contenu = "tes";
-		
-		
-		
-		return new Message(agents.get(emetteur), this, Performatif.valueOf(performatif), contenu);
-	}
-
-	public void traitementMessage(Message msg) {
-
-	}
-	
-	public void envoieMessage(Message msg){
-		
-	}
-
-	public void raisonnement() {
-
-	}
-
-	public void action() {
-
-	}
-
-	public void perception() {
-
 	}
 
 	public boolean puzzleFini() {
@@ -127,18 +80,29 @@ public class Agent extends Thread {
 	}
 
 	public boolean estArrive() {
-		return ((this.getxCourant() == this.getxArrive()) && (this.getyCourant() == this
-				.getyArrive()));
+		return ((this.getxCourant() == this.getxArrive()) && (this
+				.getyCourant() == this.getyArrive()));
 	}
-	
-	public void MAJcase(){
-		//On enléve l'agent de la case
-		if(this.getCasee() != null)
+
+	public void MAJcase() {
+		// On enléve l'agent de la case
+		if (this.getCasee() != null)
 			this.getCasee().setAgent(null);
-		//On modifie la case de l'agent et l'agent dans la case
-		this.setCasee(this.getPuzzle().getCaseXY(this.getxCourant(), this.getyCourant()));
+		// On modifie la case de l'agent et l'agent dans la case
+		this.setCasee(this.getPuzzle().getCaseXY(this.getxCourant(),
+				this.getyCourant()));
 		this.getCasee().setAgent(this);
-		System.out.println("POUR (" + this.getxCourant() + "," + this.getyCourant() + ")  ON OBTIENT " + this.getCasee().getNumero());
+		System.out.println("POUR (" + this.getxCourant() + ","
+				+ this.getyCourant() + ")  ON OBTIENT "
+				+ this.getCasee().getNumero());
+	}
+
+	public synchronized void setPositionCourante(int x, int y) {
+		this.setxCourant(x);
+		this.setyCourant(y);
+		this.MAJcase();
+		System.out.println();
+		puzzle.afficher();
 	}
 
 	// ***************************************************
@@ -230,6 +194,30 @@ public class Agent extends Thread {
 
 	public void setyCourant(int yCourant) {
 		this.yCourant = yCourant;
+	}
+
+	public ObjectOutputStream getOut() {
+		return out;
+	}
+
+	public void setOut(ObjectOutputStream out) {
+		this.out = out;
+	}
+
+	public ObjectInputStream getIn() {
+		return in;
+	}
+
+	public void setIn(ObjectInputStream in) {
+		this.in = in;
+	}
+
+	public boolean isActivated() {
+		return activated;
+	}
+
+	public void setActivated(boolean activated) {
+		this.activated = activated;
 	}
 
 }
